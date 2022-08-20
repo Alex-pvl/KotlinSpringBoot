@@ -9,8 +9,8 @@ class MockBankRepository : BankRepository {
 
     val banks = listOf(
         Bank("1234", 3.14, 1),
-        Bank("5678", 10.1, 0),
-        Bank("9000", 0.00, 3)
+        Bank("5678", 10.1, 2),
+        Bank("9000", 1.00, 3)
     )
 
     override fun retrieveBanks() : Collection<Bank> = banks
