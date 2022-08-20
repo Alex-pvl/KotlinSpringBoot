@@ -10,4 +10,6 @@ class BankService(
 ) {
     fun getBanks(): Collection<Bank> = repository.retrieveBanks()
 
+    fun getBankByAccountNumber(accountNumber: String): Bank = repository.retrieveBank(accountNumber)
+
 }
