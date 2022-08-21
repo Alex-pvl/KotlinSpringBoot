@@ -12,4 +12,6 @@ class BankService(
 
     fun getBankByAccountNumber(accountNumber: String): Bank = repository.retrieveBank(accountNumber)
 
+    fun addBank(bank: Bank): Bank = repository.createBank(bank)
+
 }
