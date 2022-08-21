@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.get
-import org.springframework.test.web.servlet.patch
-import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.*
 import ru.alexpvl.app.model.Bank
 
 @SpringBootTest
@@ -149,6 +146,32 @@ internal class BankControllerTest @Autowired constructor(
             }
 
             performPatch
+                .andDo { print() }
+                .andExpect { status { isNotFound() } }
+        }
+    }
+
+    @Nested
+    @DisplayName(value = "DELETE /api/banks/{accountNumber}")
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    inner class DeleteBank {
+        @Test
+        fun `should delete bank by given accountNumber`() {
+            val accountNumber = 5678
+
+            mockMvc.delete("$baseUrl/$accountNumber")
+                .andDo { print() }
+                .andExpect { status { isNoContent() } }
+
+            mockMvc.get("$baseUrl/$accountNumber")
+                .andExpect { status { isNotFound() } }
+        }
+
+        @Test
+        fun `should return NOT FOUND if no bank with given account number exists`() {
+            val invalidAccountNumber = "invalid_AN"
+
+            mockMvc.delete("$baseUrl/$invalidAccountNumber")
                 .andDo { print() }
                 .andExpect { status { isNotFound() } }
         }

@@ -3,6 +3,7 @@ package ru.alexpvl.app.controller
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
@@ -44,4 +45,8 @@ class BankController(
 
     @PatchMapping
     fun updateBank(@RequestBody bank: Bank): Bank = service.updateBank(bank)
+
+    @DeleteMapping("/{accountNumber}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteBank(@PathVariable accountNumber: String) = service.deleteBank(accountNumber)
 }

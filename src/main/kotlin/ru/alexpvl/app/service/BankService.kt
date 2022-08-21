@@ -1,12 +1,13 @@
 package ru.alexpvl.app.service
 
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.stereotype.Service
 import ru.alexpvl.app.model.Bank
 import ru.alexpvl.app.repository.BankRepository
 
 @Service
 class BankService(
-    private val repository: BankRepository
+    @Qualifier("mock") private val repository: BankRepository
 ) {
     fun getBanks(): Collection<Bank> = repository.retrieveBanks()
 
@@ -15,5 +16,7 @@ class BankService(
     fun addBank(bank: Bank): Bank = repository.createBank(bank)
 
     fun updateBank(bank: Bank): Bank = repository.updateBank(bank)
+
+    fun deleteBank(accountNumber: String) = repository.deleteBank(accountNumber)
 
 }
