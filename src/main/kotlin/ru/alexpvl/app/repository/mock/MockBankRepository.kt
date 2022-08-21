@@ -26,4 +26,13 @@ class MockBankRepository : BankRepository {
         banks.add(bank)
         return bank
     }
+
+    override fun updateBank(bank: Bank): Bank {
+        val currentBank = banks.firstOrNull { it.accountNumber == bank.accountNumber }
+            ?: throw NoSuchElementException("Could not find a bank with account number ${bank.accountNumber}")
+        banks.remove(currentBank)
+        banks.add(bank)
+        return bank
+    }
+
 }

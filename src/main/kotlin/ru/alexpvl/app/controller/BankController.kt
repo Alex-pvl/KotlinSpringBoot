@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -18,7 +19,7 @@ import ru.alexpvl.app.service.BankService
 @RequestMapping("/api/banks")
 class BankController(
     @Autowired
-    private val bankService: BankService
+    private val service: BankService
 ) {
 
     @ExceptionHandler(NoSuchElementException::class)
@@ -31,13 +32,16 @@ class BankController(
 
     @GetMapping
     fun getAllBanks(): Collection<Bank> =
-        bankService.getBanks()
+        service.getBanks()
 
     @GetMapping("/{accountNumber}")
     fun getBank(@PathVariable accountNumber: String): Bank =
-        bankService.getBankByAccountNumber(accountNumber)
+        service.getBankByAccountNumber(accountNumber)
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun addBank(@RequestBody bank: Bank): Bank = bankService.addBank(bank)
+    fun addBank(@RequestBody bank: Bank): Bank = service.addBank(bank)
+
+    @PatchMapping
+    fun updateBank(@RequestBody bank: Bank): Bank = service.updateBank(bank)
 }

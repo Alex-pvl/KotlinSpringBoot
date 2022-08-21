@@ -14,4 +14,6 @@ class BankService(
 
     fun addBank(bank: Bank): Bank = repository.createBank(bank)
 
+    fun updateBank(bank: Bank): Bank = repository.updateBank(bank)
+
 }
